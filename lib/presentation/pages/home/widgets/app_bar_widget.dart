@@ -7,7 +7,7 @@ Widget appBarWidget({required WidgetRef ref, required BuildContext context}) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Badge(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.orange,
           label: TextHelper.textFormat12(text: "0", color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -15,7 +15,7 @@ Widget appBarWidget({required WidgetRef ref, required BuildContext context}) {
                 backgroundColor: Colors.white,
                 icon: Icon(
                   Icons.shopping_bag,
-                  color: Colors.black,
+                  color: Colors.orange,
                   size: 20,
                 ),
                 onPress: () {
@@ -27,7 +27,7 @@ Widget appBarWidget({required WidgetRef ref, required BuildContext context}) {
           " Eat Shop",
           style: GoogleFonts.dancingScript(
             fontSize: 30,
-            color: Colors.teal,
+            color: Colors.orange,
           ),
         ),
         Padding(
@@ -36,7 +36,7 @@ Widget appBarWidget({required WidgetRef ref, required BuildContext context}) {
               backgroundColor: Colors.white,
               icon: Icon(
                 Icons.notifications,
-                color: Colors.black,
+                color: Colors.orange,
                 size: 20,
               ),
               onPress: () {}),
@@ -58,7 +58,7 @@ Future<dynamic> showModelSheet(BuildContext context) {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.orange,
       context: context,
       builder: (context) {
         return CartWidget();

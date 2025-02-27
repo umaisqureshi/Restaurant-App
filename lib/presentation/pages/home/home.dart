@@ -1,4 +1,4 @@
-import 'package:eat_like_app/presentation/pages/home/widgets/horizontal_options.dart';
+import 'package:eat_like_app/presentation/pages/home/widgets/product_grid_widget.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -22,7 +22,29 @@ class HomeScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: HorizontalOptionsWidget(),
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: PromotionalBannerWidget(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: TextHelper.textFormat16(
+                    text: "Top Rated Food", color: Colors.black, isBold: true),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ProductGridWidget(),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

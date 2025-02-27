@@ -16,7 +16,7 @@ class _CartWidgetState extends ConsumerState<CartWidget> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.teal,
+            Colors.orange,
             Colors.white,
             Colors.white,
           ],
@@ -36,7 +36,7 @@ class _CartWidgetState extends ConsumerState<CartWidget> {
                     backgroundColor: Colors.white,
                     icon: Icon(
                       Icons.arrow_back,
-                      color: Colors.teal,
+                      color: Colors.orange,
                       size: 20,
                     ),
                     onPress: () {
@@ -51,7 +51,7 @@ class _CartWidgetState extends ConsumerState<CartWidget> {
                     backgroundColor: Colors.white,
                     icon: Icon(
                       Icons.delete,
-                      color: Colors.teal,
+                      color: Colors.orange,
                       size: 20,
                     ),
                     onPress: () {}),

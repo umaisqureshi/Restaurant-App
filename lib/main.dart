@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       routerConfig: router,
       title: 'Eat Like',
       theme: ThemeData(
-        textTheme: GoogleFonts.openSansTextTheme(),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        textTheme: GoogleFonts.abelTextTheme(),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
     );
