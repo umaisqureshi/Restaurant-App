@@ -1,14 +1,13 @@
-import 'package:eat_like_app/core/routes/app_router.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  Db().init();
   runApp(ProviderScope(child: const MyApp()));
 }
 

@@ -1,4 +1,6 @@
+import 'package:eat_like_app/core/enum/enums.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
+import 'package:eat_like_app/presentation/providers/product/product_providers.dart';
 
 class ProductGridWidget extends ConsumerWidget {
   const ProductGridWidget({
@@ -7,26 +9,30 @@ class ProductGridWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return productCardWidget(
-              context: context,
-              product: ProductEntity(
-                  id: "0",
-                  name: "Cheesy bless pizza",
-                  description:
-                      "Indulge in the ultimate comfort food with our Cheesy Bless Pizza! Loaded with a generous layer of gooey, melted mozzarella and a blend of premium cheeses, this pizza is a cheese lover's dream. Topped with a rich tomato sauce, fresh herbs, and a hint of garlic, every bite is a burst of flavor. Perfectly baked to golden perfection, our Cheesy Bless Pizza is crispy on the outside, soft on the inside, and utterly irresistible. Whether you're sharing with friends or enjoying it solo, this pizza is sure to bring a smile to your face.",
-                  price: 9.50,
-                  rating: 4.3,
-                  imageUrl:
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/800px-Pizza-3007395.jpg"));
-        });
+    final products = ref.watch(productsProvider(ProductType.top));
+
+    return products.when(
+        data: (data) {
+          return buildProductsGrid(products: data, context: context);
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text('Error: $error')));
   }
+}
+
+Widget buildProductsGrid(
+    {required List<ProductEntity> products, required BuildContext context}) {
+  return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        return productCardWidget(
+            context: context,
+            product: products[index]);
+      });
 }
 
 Widget productCardWidget({

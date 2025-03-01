@@ -12,4 +12,9 @@ export 'package:eat_like_app/presentation/pages/home/widgets/horizontal_options.
 export 'package:eat_like_app/presentation/pages/home/widgets/promotional_banner_widget.dart';
 export 'package:eat_like_app/domain/entities/product_entity.dart';
 export 'package:eat_like_app/presentation/pages/home/widgets/product_detail_widget.dart';
-
+export 'package:eat_like_app/data/db/config/db_config.dart';
+export 'package:eat_like_app/core/routes/app_router.dart';
+export 'package:eat_like_app/data/db/db.dart';
+export 'package:eat_like_app/data/repositories/product_repo_impl.dart';
+export 'package:eat_like_app/domain/repositories/product_repo.dart';
+export 'package:eat_like_app/domain/usecases/product/get_products_by_type_use_case.dart';
