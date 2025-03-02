@@ -1,6 +1,6 @@
 import 'package:eat_like_app/presentation/presentation.dart';
 
-Widget appBarWidget({required WidgetRef ref, required BuildContext context}) {
+Widget appBarWidget({required BuildContext context}) {
   return Container(
     color: Colors.white,
     child: Row(

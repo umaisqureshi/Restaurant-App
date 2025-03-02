@@ -1,6 +1,4 @@
-import 'package:eat_like_app/core/enum/enums.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
-import 'package:eat_like_app/presentation/providers/product/product_providers.dart';
 
 class ProductGridWidget extends ConsumerWidget {
   const ProductGridWidget({
@@ -9,14 +7,21 @@ class ProductGridWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productsProvider(ProductType.top));
+    final productState = ref.watch(productNotifierProvider);
+    switch (productState) {
+      case ProductInitial():
+        ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.top);
+        return const Center(child: CircularProgressIndicator());
 
-    return products.when(
-        data: (data) {
-          return buildProductsGrid(products: data, context: context);
-        },
-        loading: () => Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')));
+      case ProductLoaded():
+        final products = (productState).products;
+        return buildProductsGrid(products: products, context: context);
+      case ProductError():
+        final message = (productState).message;
+        return Center(child: Text('Error: $message'));
+    }
   }
 }
 
@@ -29,9 +34,7 @@ Widget buildProductsGrid(
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: products.length,
       itemBuilder: (context, index) {
-        return productCardWidget(
-            context: context,
-            product: products[index]);
+        return productCardWidget(context: context, product: products[index]);
       });
 }
 
@@ -77,8 +80,8 @@ Widget productCardWidget({
           Expanded(
             child: Stack(
               children: [
-                ImageHelper.imageFromNetwork(
-                    imageUrl: product.imageUrl,
+                ImageHelper.imageFromGallery(
+                    path: product.imageUrl,
                     fit: BoxFit.cover,
                     height: 150,
                     width: double.infinity),

@@ -1,4 +1,3 @@
-import 'package:eat_like_app/core/enum/enums.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
@@ -11,9 +10,8 @@ final getProductsByTypeUseCaseProvider =
   return GetProductsByTypeUseCase(productRepository);
 });
 
-final productsProvider =
-    FutureProvider.family<List<ProductEntity>, ProductType>((ref, type) async {
+final productNotifierProvider =
+    StateNotifierProvider<ProductNotifier, ProductState>((ref) {
   final getProductsByTypeUseCase = ref.read(getProductsByTypeUseCaseProvider);
-  List<ProductEntity> data = await getProductsByTypeUseCase.execute(type);
-  return data;
+  return ProductNotifier(getProductsByTypeUseCase);
 });

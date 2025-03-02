@@ -1,6 +1,4 @@
-import 'package:eat_like_app/core/constant/products.dart';
 import 'package:eat_like_app/data/data.dart';
-import 'package:eat_like_app/presentation/presentation.dart';
 
 class Db {
   static final Db _db = Db._internal();
@@ -22,10 +20,10 @@ class Db {
           ..name = product.name
           ..description = product.description
           ..price = product.price
-          ..isTopRated = product.isTopRated ?? false
+          ..isTopRated = product.isTopRated
           ..type = product.type
           ..imageUrl = product.imageUrl
-          ..rating = product.rating ?? 0.0;
+          ..rating = product.rating;
 
         await isar!.productCollections.put(collection);
       }

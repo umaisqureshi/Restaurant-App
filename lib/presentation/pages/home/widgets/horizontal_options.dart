@@ -13,32 +13,50 @@ class HorizontalOptionsWidget extends ConsumerWidget {
         children: [
           roundedOptionCardWidget(
             isSelected: true,
-            onPress: () {},
+            onPress: () {
+                ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.top);
+            },
             context: context,
             color: Colors.orange,
             path: "top_rated.png",
           ),
           roundedOptionCardWidget(
             isSelected: false,
-            onPress: () {},
+            onPress: () {
+                ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.burger);
+            },
             context: context,
             path: "burger.jpg",
           ),
           roundedOptionCardWidget(
             isSelected: false,
-            onPress: () {},
+            onPress: () {
+                ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.pizza);
+            },
             context: context,
             path: "pizza.jpg",
           ),
           roundedOptionCardWidget(
             isSelected: false,
-            onPress: () {},
+            onPress: () {  ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.pasta);},
             context: context,
             path: "pasta.png",
           ),
           roundedOptionCardWidget(
             isSelected: false,
-            onPress: () {},
+            onPress: () {
+                ref
+            .read(productNotifierProvider.notifier)
+            .fetchProducts(ProductType.drink);
+            },
             context: context,
             path: "drink.jpg",
           ),

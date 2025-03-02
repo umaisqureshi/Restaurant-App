@@ -32,7 +32,8 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   image: DecorationImage(
-                    image: NetworkImage(widget.product.imageUrl),
+                    image:
+                        AssetImage("assets/images/${widget.product.imageUrl}"),
                     fit: BoxFit.cover,
                   ),
                 ),

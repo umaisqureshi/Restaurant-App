@@ -18,3 +18,8 @@ export 'package:eat_like_app/data/db/db.dart';
 export 'package:eat_like_app/data/repositories/product_repo_impl.dart';
 export 'package:eat_like_app/domain/repositories/product_repo.dart';
 export 'package:eat_like_app/domain/usecases/product/get_products_by_type_use_case.dart';
+export 'package:eat_like_app/core/enum/enums.dart';
+export 'package:eat_like_app/presentation/providers/product/product_providers.dart';
+export 'package:eat_like_app/presentation/state/product_state.dart';
+export 'package:eat_like_app/presentation/notifiers/product_state_notifier.dart';
+
