@@ -22,4 +22,4 @@ export 'package:eat_like_app/core/enum/enums.dart';
 export 'package:eat_like_app/presentation/providers/product/product_providers.dart';
 export 'package:eat_like_app/presentation/state/product_state.dart';
 export 'package:eat_like_app/presentation/notifiers/product_state_notifier.dart';
-
+export 'package:eat_like_app/presentation/pages/home/widgets/product_card.dart';

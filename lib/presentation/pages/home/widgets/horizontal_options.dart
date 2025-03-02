@@ -14,9 +14,9 @@ class HorizontalOptionsWidget extends ConsumerWidget {
           roundedOptionCardWidget(
             isSelected: true,
             onPress: () {
-                ref
-            .read(productNotifierProvider.notifier)
-            .fetchProducts(ProductType.top);
+              ref
+                  .read(productNotifierProvider.notifier)
+                  .fetchProducts(ProductType.top);
             },
             context: context,
             color: Colors.orange,
@@ -25,9 +25,9 @@ class HorizontalOptionsWidget extends ConsumerWidget {
           roundedOptionCardWidget(
             isSelected: false,
             onPress: () {
-                ref
-            .read(productNotifierProvider.notifier)
-            .fetchProducts(ProductType.burger);
+              ref
+                  .read(productNotifierProvider.notifier)
+                  .fetchProducts(ProductType.burger);
             },
             context: context,
             path: "burger.jpg",
@@ -35,27 +35,29 @@ class HorizontalOptionsWidget extends ConsumerWidget {
           roundedOptionCardWidget(
             isSelected: false,
             onPress: () {
-                ref
-            .read(productNotifierProvider.notifier)
-            .fetchProducts(ProductType.pizza);
+              ref
+                  .read(productNotifierProvider.notifier)
+                  .fetchProducts(ProductType.pizza);
             },
             context: context,
             path: "pizza.jpg",
           ),
           roundedOptionCardWidget(
             isSelected: false,
-            onPress: () {  ref
-            .read(productNotifierProvider.notifier)
-            .fetchProducts(ProductType.pasta);},
+            onPress: () {
+              ref
+                  .read(productNotifierProvider.notifier)
+                  .fetchProducts(ProductType.pasta);
+            },
             context: context,
             path: "pasta.png",
           ),
           roundedOptionCardWidget(
             isSelected: false,
             onPress: () {
-                ref
-            .read(productNotifierProvider.notifier)
-            .fetchProducts(ProductType.drink);
+              ref
+                  .read(productNotifierProvider.notifier)
+                  .fetchProducts(ProductType.drink);
             },
             context: context,
             path: "drink.jpg",
