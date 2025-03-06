@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:eat_like_app/domain/entities/cart_entity.dart';
-import 'package:eat_like_app/domain/repositories/cart_repo.dart';
+import 'package:eat_like_app/domain/domain.dart';
 
 class GetAllCartProductUseCase {
   final CartRepo _cartRepository;

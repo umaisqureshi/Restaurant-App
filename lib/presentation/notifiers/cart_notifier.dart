@@ -1,4 +1,3 @@
-import 'package:eat_like_app/domain/usecases/cart/get_cart_count_use_case.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
 class ItemCountNotifier extends StateNotifier<int> {

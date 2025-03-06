@@ -1,6 +1,4 @@
 import 'package:eat_like_app/data/data.dart';
-import 'package:eat_like_app/domain/entities/cart_entity.dart';
-import 'package:eat_like_app/domain/repositories/cart_repo.dart';
 
 class CartRepoImpl extends CartRepo {
   Db db = Db().instance;
@@ -23,6 +21,7 @@ class CartRepoImpl extends CartRepo {
   Future<List<CartEntity>> removeProductFromCart(int id) {
     return db.removeProductFromCart(id);
   }
+
   @override
   Future<int> getCartCount() {
     return db.getCartProductCount();

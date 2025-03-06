@@ -1,4 +1,4 @@
-import 'package:eat_like_app/presentation/presentation.dart';
+import 'package:eat_like_app/domain/domain.dart';
 
 class GetCartCountUseCase {
   final CartRepo _cartRepository;

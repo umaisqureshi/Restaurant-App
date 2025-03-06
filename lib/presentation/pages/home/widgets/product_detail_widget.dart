@@ -1,7 +1,4 @@
-import 'package:eat_like_app/core/core.dart';
-import 'package:eat_like_app/domain/entities/cart_entity.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
-import 'package:eat_like_app/presentation/providers/cart/cart_providers.dart';
 
 class ProductDetailWidget extends ConsumerStatefulWidget {
   const ProductDetailWidget({super.key, required this.product});
@@ -136,9 +133,9 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
                           imageUrl: widget.product.imageUrl,
                           price: widget.product.price,
                           quantity: ref.watch(itemCountNotifier)));
-                          Future.delayed(Duration(milliseconds: 500), () {
-                            ref.read(cartCountNotifier.notifier).getCartCount();
-                          });
+                  Future.delayed(Duration(milliseconds: 500), () {
+                    ref.read(cartCountNotifier.notifier).getCartCount();
+                  });
                 },
                 child: Padding(
                     padding: const EdgeInsets.symmetric(

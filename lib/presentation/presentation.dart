@@ -35,5 +35,6 @@ export 'package:eat_like_app/domain/entities/cart_entity.dart';
 export 'package:eat_like_app/presentation/providers/cart/cart_providers.dart';
 export 'package:go_router/go_router.dart';
 export 'package:eat_like_app/presentation/pages/home/widgets/product_grid_widget.dart';
+export 'package:eat_like_app/domain/usecases/cart/get_cart_count_use_case.dart';
 
 

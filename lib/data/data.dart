@@ -9,4 +9,7 @@ export 'package:eat_like_app/domain/repositories/product_repo.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:eat_like_app/data/db/db.dart';
 export 'package:eat_like_app/core/constant/products.dart';
+export 'package:eat_like_app/data/db/collections/cart_collection.dart';
+export 'package:eat_like_app/domain/entities/cart_entity.dart';
+export 'package:eat_like_app/domain/repositories/cart_repo.dart';
 

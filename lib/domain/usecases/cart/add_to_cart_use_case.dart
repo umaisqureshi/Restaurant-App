@@ -1,5 +1,4 @@
-import 'package:eat_like_app/domain/entities/cart_entity.dart';
-import 'package:eat_like_app/domain/repositories/cart_repo.dart';
+import 'package:eat_like_app/domain/domain.dart';
 
 class AddToCartUseCase {
   final CartRepo _cartRepository;

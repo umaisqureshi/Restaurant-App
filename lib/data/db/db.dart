@@ -1,6 +1,5 @@
 import 'package:eat_like_app/data/data.dart';
-import 'package:eat_like_app/data/db/collections/cart_collection.dart';
-import 'package:eat_like_app/domain/entities/cart_entity.dart';
+
 
 class Db {
   static final Db _db = Db._internal();
