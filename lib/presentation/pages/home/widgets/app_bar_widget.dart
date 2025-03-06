@@ -1,6 +1,7 @@
 import 'package:eat_like_app/presentation/presentation.dart';
 
-Widget appBarWidget({required BuildContext context}) {
+Widget appBarWidget({required BuildContext context, required WidgetRef ref}) {
+  final itemCount = ref.watch(cartCountNotifier);
   return Container(
     color: Colors.white,
     child: Row(
@@ -8,7 +9,7 @@ Widget appBarWidget({required BuildContext context}) {
       children: [
         Badge(
           backgroundColor: Colors.orange,
-          label: TextHelper.textFormat12(text: "0", color: Colors.white),
+          label: TextHelper.textFormat12(text: itemCount.toString(), color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: circularOption(

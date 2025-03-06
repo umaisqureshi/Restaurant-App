@@ -3,6 +3,7 @@ import 'package:eat_like_app/presentation/presentation.dart';
 Widget productCardWidget({
   required ProductEntity product,
   required BuildContext context,
+  required WidgetRef ref
 }) {
   return GestureDetector(
     onTap: () {
@@ -20,7 +21,9 @@ Widget productCardWidget({
           context: context,
           builder: (context) => ProductDetailWidget(
                 product: product,
-              ));
+              )).whenComplete((){
+        ref.read(itemCountNotifier.notifier).reset();
+              });
     },
     child: Container(
       margin: const EdgeInsets.all(8),

@@ -1,5 +1,7 @@
 import 'package:eat_like_app/core/core.dart';
+import 'package:eat_like_app/domain/entities/cart_entity.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
+import 'package:eat_like_app/presentation/providers/cart/cart_providers.dart';
 
 class ProductDetailWidget extends ConsumerStatefulWidget {
   const ProductDetailWidget({super.key, required this.product});
@@ -113,7 +115,7 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
               color: Colors.black,
             ),
           ),
-          itemCountWidget(),
+          itemCountWidget(ref),
           const SizedBox(
             height: 10,
           ),
@@ -126,7 +128,18 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  ref.read(cartNotifierProvider.notifier).addProductToCart(
+                      CartEntity(
+                          id: widget.product.id!,
+                          name: widget.product.name,
+                          imageUrl: widget.product.imageUrl,
+                          price: widget.product.price,
+                          quantity: ref.watch(itemCountNotifier)));
+                          Future.delayed(Duration(milliseconds: 500), () {
+                            ref.read(cartCountNotifier.notifier).getCartCount();
+                          });
+                },
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 10),
@@ -141,7 +154,9 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
   }
 }
 
-Widget itemCountWidget() {
+Widget itemCountWidget(WidgetRef ref) {
+  final cartCount = ref.watch(itemCountNotifier);
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16.0),
     child: Row(
@@ -157,17 +172,20 @@ Widget itemCountWidget() {
           ),
           child: Row(
             children: [
-              Container(
-                height: 30,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.remove,
-                    color: Colors.white,
+              GestureDetector(
+                onTap: () => ref.read(itemCountNotifier.notifier).decrement(),
+                child: Container(
+                  height: 30,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.remove,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -180,7 +198,7 @@ Widget itemCountWidget() {
                 ),
                 child: Center(
                   child: Text(
-                    "1",
+                    cartCount.toString(),
                     style: GoogleFonts.openSans(
                         color: Colors.orange,
                         fontSize: 16,
@@ -188,17 +206,20 @@ Widget itemCountWidget() {
                   ),
                 ),
               ),
-              Container(
-                height: 30,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
+              GestureDetector(
+                onTap: () => ref.read(itemCountNotifier.notifier).increment(),
+                child: Container(
+                  height: 30,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

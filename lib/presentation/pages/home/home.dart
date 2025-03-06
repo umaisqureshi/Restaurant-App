@@ -1,11 +1,10 @@
-import 'package:eat_like_app/presentation/pages/home/widgets/product_grid_widget.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -13,7 +12,7 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: PreferredSize(
               preferredSize: Size(double.infinity, 100),
-              child: appBarWidget(context: context)),
+              child: appBarWidget(context: context, ref: ref)),
           body: ListView(
             children: [
               const SizedBox(

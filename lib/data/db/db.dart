@@ -1,4 +1,6 @@
 import 'package:eat_like_app/data/data.dart';
+import 'package:eat_like_app/data/db/collections/cart_collection.dart';
+import 'package:eat_like_app/domain/entities/cart_entity.dart';
 
 class Db {
   static final Db _db = Db._internal();
@@ -48,6 +50,58 @@ class Db {
         data.map((e) => ProductEntity.fromCollection(e)).toList();
 
     return products;
+  }
+
+  // Cart Collection
+  Future<void> addProductToCart(CartEntity product) async {
+    await isar!.writeTxn(() async {
+      final existingCollection = await isar!.cartProductCollections
+          .where()
+          .productIdEqualTo(product.id)
+          .findFirst();
+
+      if (existingCollection != null) {
+        existingCollection.quantity =
+            (existingCollection.quantity ?? 1) + product.quantity;
+        await isar!.cartProductCollections.put(existingCollection);
+      } else {
+        final newCollection = CartProductCollection()
+          ..name = product.name
+          ..price = product.price
+          ..productId = product.id
+          ..imageUrl = product.imageUrl
+          ..quantity = product.quantity;
+
+        await isar!.cartProductCollections.put(newCollection);
+      }
+    });
+  }
+
+  Future<int> getCartProductCount() async {
+    List<CartProductCollection> data =
+        await isar!.cartProductCollections.where().findAll();
+    return data.length;
+  }
+
+  Future<List<CartEntity>> removeProductFromCart(int id) async {
+    await isar!.writeTxn(() async {
+      await isar!.cartProductCollections.delete(id);
+    });
+    return getAllCartProducts();
+  }
+
+  Future<List<CartEntity>> getAllCartProducts() async {
+    List<CartProductCollection> data =
+        await isar!.cartProductCollections.where().findAll();
+    List<CartEntity> products =
+        data.map((e) => CartEntity.fromCollection(e)).toList();
+    return products;
+  }
+
+  Future<void> clearCart() async {
+    await isar!.writeTxn(() async {
+      await isar!.cartProductCollections.clear();
+    });
   }
 
   void openDb() async {
