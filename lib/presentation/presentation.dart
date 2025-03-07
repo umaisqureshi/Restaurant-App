@@ -21,10 +21,10 @@ export 'package:eat_like_app/domain/usecases/cart/remove_cart_item_use_case.dart
 export 'package:eat_like_app/domain/usecases/cart/request/update_cart_request.dart';
 export 'package:eat_like_app/domain/usecases/cart/update_cart_item_use_case.dart';
 export 'package:eat_like_app/domain/usecases/product/get_products_by_type_use_case.dart';
-export 'package:eat_like_app/presentation/notifiers/cart_notifier.dart';
-export 'package:eat_like_app/presentation/notifiers/product_state_notifier.dart';
-export 'package:eat_like_app/presentation/pages/home/cart/cart_screen.dart';
-export 'package:eat_like_app/presentation/pages/home/cart/widgets/cart_widgets.dart';
+export 'package:eat_like_app/presentation/notifiers/cart/cart_notifier.dart';
+export 'package:eat_like_app/presentation/notifiers/product/product_state_notifier.dart';
+export 'package:eat_like_app/presentation/pages/cart/cart_screen.dart';
+export 'package:eat_like_app/presentation/pages/cart/widgets/cart_widgets.dart';
 export 'package:eat_like_app/presentation/pages/home/widgets/app_bar_widget.dart';
 export 'package:eat_like_app/presentation/pages/home/widgets/horizontal_options.dart';
 export 'package:eat_like_app/presentation/pages/home/widgets/product_card.dart';
@@ -34,8 +34,8 @@ export 'package:eat_like_app/presentation/pages/home/widgets/promotional_banner_
 export 'package:eat_like_app/presentation/pages/onboarding/widgets/widgets.dart';
 export 'package:eat_like_app/presentation/providers/cart/cart_providers.dart';
 export 'package:eat_like_app/presentation/providers/product/product_providers.dart';
-export 'package:eat_like_app/presentation/state/cart_state.dart';
-export 'package:eat_like_app/presentation/state/product_state.dart';
+export 'package:eat_like_app/presentation/state/cart/cart_state.dart';
+export 'package:eat_like_app/presentation/state/product/product_state.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:go_router/go_router.dart';
