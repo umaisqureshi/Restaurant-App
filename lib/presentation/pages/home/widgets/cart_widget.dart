@@ -1,3 +1,4 @@
+import 'package:eat_like_app/core/helpers/total_calculator_helper.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
 class CartWidget extends ConsumerWidget {
@@ -35,6 +36,79 @@ class CartWidget extends ConsumerWidget {
     );
   }
 
+  Widget cartItemCountWidget(WidgetRef ref, int count) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 35,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      count.toString(),
+                      style: GoogleFonts.openSans(
+                          color: Colors.orange,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildCart(CartState state, BuildContext context, WidgetRef ref) {
     switch (state) {
       case CartLoading():
@@ -48,10 +122,6 @@ class CartWidget extends ConsumerWidget {
         return Center(child: Text('Error: ${state.message}'));
       case CartEmpty():
         return const Center(child: Text('Cart is empty'));
-      case CartProductAdded():
-        // Refresh the cart after adding a product
-        ref.read(cartNotifierProvider.notifier).getAllCartProducts();
-        return const Center(child: Text('Product added to cart!'));
     }
   }
 
@@ -73,7 +143,7 @@ class CartWidget extends ConsumerWidget {
               text: "Payment Summary", color: Colors.black, isBold: true),
         ),
         const SizedBox(height: 10),
-        subTotalWidget(cartCount),
+        subTotalWidget(cartProducts),
         const SizedBox(height: 10),
         orderConfirmedButton(cartCount: cartCount),
         const SizedBox(height: 20),
@@ -81,7 +151,9 @@ class CartWidget extends ConsumerWidget {
     );
   }
 
-  Widget subTotalWidget(int cartCount) {
+  Widget subTotalWidget(List<CartEntity> items) {
+    int subTotal = TotalCalculatorHelper.totalCalculator(items);
+    double tax = TotalCalculatorHelper.getFivePercentTax(subTotal);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
@@ -109,7 +181,8 @@ class CartWidget extends ConsumerWidget {
                 children: [
                   TextHelper.textFormat16(
                       text: "Subtotal", color: Colors.black),
-                  TextHelper.textFormat16(text: "€100", color: Colors.orange),
+                  TextHelper.textFormat16(
+                      text: "€$subTotal", color: Colors.orange),
                 ],
               ),
               Row(
@@ -117,17 +190,21 @@ class CartWidget extends ConsumerWidget {
                 children: [
                   TextHelper.textFormat16(
                       text: "Tax (5%)", color: Colors.black),
-                  TextHelper.textFormat16(text: "€10", color: Colors.orange),
+                  TextHelper.textFormat16(text: "€$tax", color: Colors.orange),
                 ],
               ),
-              const Divider(),
+              Divider(
+                color: Colors.grey[200],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextHelper.textFormat16(
                       text: "Total", color: Colors.black, isBold: true),
                   TextHelper.textFormat16(
-                      text: "€110", color: Colors.orange, isBold: true),
+                      text: "€${(tax + subTotal)}",
+                      color: Colors.orange,
+                      isBold: true),
                 ],
               ),
             ],
@@ -155,50 +232,100 @@ class CartWidget extends ConsumerWidget {
   }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(8),
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/${cart.imageUrl}"),
-                  fit: BoxFit.cover,
+      child: Dismissible(
+        direction: DismissDirection.endToStart,
+        key: ValueKey(cart.id),
+        background: slideLeftBackground(),
+        onDismissed: (direction) {},
+        confirmDismiss: (direction) async {
+          if (direction == DismissDirection.endToStart) {
+            await showDialogWidget(context, cart, ref);
+          }
+          return;
+        },
+        child: Container(
+          height: 80,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withValues(alpha: 0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(8),
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/${cart.imageUrl}"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextHelper.textFormat16(text: cart.name, color: Colors.black),
-                TextHelper.textFormat16(
-                    text: "Price: ${cart.price}",
-                    color: Colors.orange,
-                    isBold: true),
-              ],
-            ),
-            const Spacer(),
-            cartItemCountWidget(ref, cart.quantity),
-          ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextHelper.textFormat16(text: cart.name, color: Colors.black),
+                  TextHelper.textFormat16(
+                      text: "Price: ${cart.price}",
+                      color: Colors.orange,
+                      isBold: true),
+                ],
+              ),
+              const Spacer(),
+              cartItemCountWidget(ref, cart.quantity),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  showDialogWidget(BuildContext context, CartEntity cart, WidgetRef ref) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: TextHelper.textFormat18(
+                text: "Are you sure you want to delete ${cart.name}?",
+                color: Colors.black),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ElevatedButton(
+                child: Text(
+                  "Delete",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () {
+                  ref
+                      .read(cartNotifierProvider.notifier)
+                      .removeProductFromCart(cart.id);
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    ref.read(cartCountNotifier.notifier).getCartCount();
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
 
@@ -252,75 +379,37 @@ Widget cartHeaderWidget(BuildContext context) {
   );
 }
 
-Widget cartItemCountWidget(WidgetRef ref, int count) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 35,
-          decoration: BoxDecoration(
-            color: Colors.orange,
-            borderRadius: BorderRadius.circular(10),
+Widget slideLeftBackground() {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.red,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    alignment: Alignment.centerRight,
+    child: Align(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Icon(
+            Icons.delete,
+            color: Colors.white,
           ),
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    count.toString(),
-                    style: GoogleFonts.openSans(
-                        color: Colors.orange,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          SizedBox(
+            width: 10,
           ),
-        ),
-      ],
+          Text(
+            " Delete",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.right,
+          ),
+          SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
     ),
   );
 }

@@ -9,7 +9,8 @@ Widget appBarWidget({required BuildContext context, required WidgetRef ref}) {
       children: [
         Badge(
           backgroundColor: Colors.orange,
-          label: TextHelper.textFormat12(text: itemCount.toString(), color: Colors.white),
+          label: TextHelper.textFormat12(
+              text: itemCount.toString(), color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: circularOption(
@@ -54,8 +55,8 @@ Future<dynamic> showModelSheet(BuildContext context) {
       isScrollControlled: true,
       elevation: 5,
       constraints: BoxConstraints(
-          minHeight: MediaQuery.sizeOf(context).height * 0.7,
-          maxHeight: MediaQuery.sizeOf(context).height * 0.85),
+          minHeight: MediaQuery.sizeOf(context).height * 0.8,
+          maxHeight: MediaQuery.sizeOf(context).height * 0.9),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),

@@ -1,4 +1,5 @@
 import 'package:eat_like_app/presentation/presentation.dart';
+import 'package:eat_like_app/presentation/widgets/snackbar.dart';
 
 class ProductDetailWidget extends ConsumerStatefulWidget {
   const ProductDetailWidget({super.key, required this.product});
@@ -133,9 +134,13 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
                           imageUrl: widget.product.imageUrl,
                           price: widget.product.price,
                           quantity: ref.watch(itemCountNotifier)));
-                  Future.delayed(Duration(milliseconds: 500), () {
+                  Future.delayed(Duration(milliseconds: 100), () {
                     ref.read(cartCountNotifier.notifier).getCartCount();
+                    
                   });
+                  context.pop();
+                  SnackbarWidget()
+                      .showSnackBar("Product added successfully", context);
                 },
                 child: Padding(
                     padding: const EdgeInsets.symmetric(

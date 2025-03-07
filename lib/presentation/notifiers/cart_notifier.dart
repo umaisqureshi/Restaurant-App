@@ -46,7 +46,7 @@ class CartItemNotifier extends StateNotifier<CartState> {
 
   void addProductToCart(CartEntity product) {
     addToCartUseCase.execute(product).then((value) {
-      state = CartProductAdded();
+      state = CartLoading();
       getAllCartProducts();
     }).catchError((e) {
       state = CartError(e.toString());

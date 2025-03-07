@@ -1,10 +1,9 @@
 import 'package:eat_like_app/presentation/presentation.dart';
 
-Widget productCardWidget({
-  required ProductEntity product,
-  required BuildContext context,
-  required WidgetRef ref
-}) {
+Widget productCardWidget(
+    {required ProductEntity product,
+    required BuildContext context,
+    required WidgetRef ref}) {
   return GestureDetector(
     onTap: () {
       showModalBottomSheet(
@@ -12,8 +11,8 @@ Widget productCardWidget({
           isScrollControlled: true,
           elevation: 5,
           constraints: BoxConstraints(
-              minHeight: MediaQuery.sizeOf(context).height * 0.7,
-              maxHeight: MediaQuery.sizeOf(context).height * 0.85),
+              minHeight: MediaQuery.sizeOf(context).height * 0.85,
+              maxHeight: MediaQuery.sizeOf(context).height * 0.9),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20))),
@@ -21,9 +20,9 @@ Widget productCardWidget({
           context: context,
           builder: (context) => ProductDetailWidget(
                 product: product,
-              )).whenComplete((){
+              )).whenComplete(() {
         ref.read(itemCountNotifier.notifier).reset();
-              });
+      });
     },
     child: Container(
       margin: const EdgeInsets.all(8),

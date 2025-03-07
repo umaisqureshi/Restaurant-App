@@ -16,4 +16,3 @@ class CartError extends CartState {
 
 class CartEmpty extends CartState {}
 
-class CartProductAdded extends CartState {}
