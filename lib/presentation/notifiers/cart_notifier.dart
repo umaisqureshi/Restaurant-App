@@ -36,13 +36,15 @@ class CartItemNotifier extends StateNotifier<CartState> {
   final AddToCartUseCase addToCartUseCase;
   final RemoveCartItemUseCase removeCartItemUseCase;
   final ClearCartUseCase clearCartUseCase;
+  final UpdateCartItemUseCase updateCartItemUseCase;
 
-  CartItemNotifier({
-    required this.getAllCartProductUseCase,
-    required this.addToCartUseCase,
-    required this.removeCartItemUseCase,
-    required this.clearCartUseCase,
-  }) : super(CartLoading());
+  CartItemNotifier(
+      {required this.getAllCartProductUseCase,
+      required this.addToCartUseCase,
+      required this.removeCartItemUseCase,
+      required this.clearCartUseCase,
+      required this.updateCartItemUseCase})
+      : super(CartLoading());
 
   void addProductToCart(CartEntity product) {
     addToCartUseCase.execute(product).then((value) {
@@ -60,6 +62,14 @@ class CartItemNotifier extends StateNotifier<CartState> {
       (r) => r.isEmpty ? CartEmpty() : CartLoaded(r),
       (l) => CartError(l.toString()),
     );
+  }
+
+  void updateCartItem(UpdateCartRequest request) {
+    updateCartItemUseCase.execute(request).then((value) {
+      getAllCartProducts();
+    }).catchError((e) {
+      state = CartError(e.toString());
+    });
   }
 
   void removeProductFromCart(int id) {

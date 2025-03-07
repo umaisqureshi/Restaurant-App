@@ -26,4 +26,9 @@ class CartRepoImpl extends CartRepo {
   Future<int> getCartCount() {
     return db.getCartProductCount();
   }
+
+  @override
+  Future<void> updateCartItem(UpdateCartRequest request) {
+    return db.updateCartItem(request);
+  }
 }

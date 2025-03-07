@@ -13,3 +13,4 @@ export 'package:eat_like_app/data/db/collections/cart_collection.dart';
 export 'package:eat_like_app/domain/entities/cart_entity.dart';
 export 'package:eat_like_app/domain/repositories/cart_repo.dart';
 
+export 'package:eat_like_app/domain/usecases/cart/request/update_cart_request.dart';

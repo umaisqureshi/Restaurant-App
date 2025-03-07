@@ -1,6 +1,5 @@
 import 'package:eat_like_app/data/data.dart';
 
-
 class Db {
   static final Db _db = Db._internal();
   factory Db() {
@@ -72,6 +71,30 @@ class Db {
           ..quantity = product.quantity;
 
         await isar!.cartProductCollections.put(newCollection);
+      }
+    });
+  }
+
+  Future<void> updateCartItem(UpdateCartRequest request) async {
+    await isar!.writeTxn(() async {
+      final existingCollection = await isar!.cartProductCollections
+          .where()
+          .productIdEqualTo(request.id)
+          .findFirst();
+
+      if (existingCollection != null) {
+        if (request.isIncrease) {
+          existingCollection.quantity = (existingCollection.quantity ?? 1) + 1;
+          await isar!.cartProductCollections.put(existingCollection);
+        } else {
+          if (existingCollection.quantity! > 1) {
+            existingCollection.quantity =
+                (existingCollection.quantity ?? 1) - 1;
+            await isar!.cartProductCollections.put(existingCollection);
+          } else {
+            await isar!.cartProductCollections.delete(request.id);
+          }
+        }
       }
     });
   }
