@@ -1,5 +1,5 @@
-import 'package:eat_like_app/core/enum/enums.dart';
-import 'package:eat_like_app/domain/entities/product_entity.dart';
+import 'package:eat_like_app/core/core.dart';
+
 
 List<ProductEntity> products = [
   ProductEntity(

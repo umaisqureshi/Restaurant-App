@@ -5,12 +5,10 @@ class SnackbarWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(content),
-
-        duration: Duration(seconds: 3), // SnackBar visibility duration
-        behavior: SnackBarBehavior
-            .floating, // Optional: Makes it float above other widgets
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Optional: Rounded corners
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );

@@ -10,7 +10,7 @@ class CartScreen extends ConsumerWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity, // Ensure full screen height
+        height: double.infinity, 
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -26,9 +26,7 @@ class CartScreen extends ConsumerWidget {
           children: [
             cartHeaderWidget(context),
             const SizedBox(height: 10),
-            Expanded(
-                child: buildCart(cartState, context,
-                    ref)), // Use Expanded for dynamic height
+            Expanded(child: buildCart(cartState, context, ref)),
           ],
         ),
       ),

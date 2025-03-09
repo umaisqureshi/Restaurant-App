@@ -8,7 +8,6 @@ class ProductNotifier extends StateNotifier<ProductState> {
   Future<void> fetchProducts(ProductType type) async {
     try {
       final result = await getProductsByTypeUseCase.execute(type);
-
       state = ProductLoaded(result);
     } catch (e) {
       state = ProductError(e.toString());

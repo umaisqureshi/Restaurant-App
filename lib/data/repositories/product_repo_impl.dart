@@ -1,7 +1,7 @@
 import 'package:eat_like_app/data/data.dart';
 
 class ProductRepoImpl implements ProductRepository {
-  final Db db = Db().instance;
+  final Db db = Db();
 
   @override
   Future<List<ProductEntity>> getTopProducts() async {

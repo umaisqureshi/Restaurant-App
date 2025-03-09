@@ -6,12 +6,12 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
 
 final getProductsByTypeUseCaseProvider =
     Provider<GetProductsByTypeUseCase>((ref) {
-  final productRepository = ref.read(productRepositoryProvider);
+  final productRepository = ref.watch(productRepositoryProvider);
   return GetProductsByTypeUseCase(productRepository);
 });
 
 final productNotifierProvider =
     StateNotifierProvider<ProductNotifier, ProductState>((ref) {
-  final getProductsByTypeUseCase = ref.read(getProductsByTypeUseCaseProvider);
+  final getProductsByTypeUseCase = ref.watch(getProductsByTypeUseCaseProvider);
   return ProductNotifier(getProductsByTypeUseCase);
 });

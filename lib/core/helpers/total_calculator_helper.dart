@@ -1,4 +1,4 @@
-import 'package:eat_like_app/data/data.dart';
+import 'package:eat_like_app/core/core.dart';
 
 class TotalCalculatorHelper {
   static int totalCalculator(List<CartEntity> items) {

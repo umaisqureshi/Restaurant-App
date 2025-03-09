@@ -1,21 +1,38 @@
 import 'package:eat_like_app/data/data.dart';
 
 class Db {
-  static final Db _db = Db._internal();
-  factory Db() {
-    return _db;
-  }
+  static final Db _instance = Db._internal();
+  factory Db() => _instance;
   Db._internal();
-  Db get instance => _db;
-  Isar? isar;
 
-  void init() {
-    openDb();
+  Isar? _isar;
+
+  Future<void> init() async {
+    await _openDb();
+    await _clearDb();
+    await _addInitialProducts();
+  }
+
+  Future<void> _openDb() async {
+    _isar = await DBConfig.openDB();
+  }
+
+  Future<void> _clearDb() async {
+    await _isar?.writeTxn(() async {
+      await _isar?.productCollections.clear();
+      await _isar?.cartProductCollections.clear();
+    });
+  }
+
+  Future<void> _addInitialProducts() async {
+    await addProducts(products);
   }
 
   Future<void> addProducts(List<ProductEntity> products) async {
-    await isar!.writeTxn(() async {
-      for (ProductEntity product in products) {
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    await _isar!.writeTxn(() async {
+      for (final product in products) {
         final collection = ProductCollection()
           ..name = product.name
           ..description = product.description
@@ -25,35 +42,36 @@ class Db {
           ..imageUrl = product.imageUrl
           ..rating = product.rating;
 
-        await isar!.productCollections.put(collection);
+        await _isar!.productCollections.put(collection);
       }
     });
   }
 
   Future<List<ProductEntity>> getProductsByType(ProductType type) async {
-    List<ProductCollection> data =
-        await isar!.productCollections.filter().typeEqualTo(type).findAll();
-    List<ProductEntity> products =
-        data.map((e) => ProductEntity.fromCollection(e)).toList();
-    return products;
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    final data =
+        await _isar!.productCollections.filter().typeEqualTo(type).findAll();
+
+    return data.map(ProductEntity.fromCollection).toList();
   }
 
   Future<List<ProductEntity>> getTopRatedProducts() async {
-    List<ProductCollection> data = await isar!.productCollections
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    final data = await _isar!.productCollections
         .where()
         .isTopRatedEqualTo(true)
         .findAll();
 
-    List<ProductEntity> products =
-        data.map((e) => ProductEntity.fromCollection(e)).toList();
-
-    return products;
+    return data.map(ProductEntity.fromCollection).toList();
   }
 
-  // Cart Collection
   Future<void> addProductToCart(CartEntity product) async {
-    await isar!.writeTxn(() async {
-      final existingCollection = await isar!.cartProductCollections
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    await _isar!.writeTxn(() async {
+      final existingCollection = await _isar!.cartProductCollections
           .where()
           .productIdEqualTo(product.id)
           .findFirst();
@@ -61,7 +79,7 @@ class Db {
       if (existingCollection != null) {
         existingCollection.quantity =
             (existingCollection.quantity ?? 1) + product.quantity;
-        await isar!.cartProductCollections.put(existingCollection);
+        await _isar!.cartProductCollections.put(existingCollection);
       } else {
         final newCollection = CartProductCollection()
           ..name = product.name
@@ -70,14 +88,16 @@ class Db {
           ..imageUrl = product.imageUrl
           ..quantity = product.quantity;
 
-        await isar!.cartProductCollections.put(newCollection);
+        await _isar!.cartProductCollections.put(newCollection);
       }
     });
   }
 
   Future<void> updateCartItem(UpdateCartRequest request) async {
-    await isar!.writeTxn(() async {
-      final existingCollection = await isar!.cartProductCollections
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    await _isar!.writeTxn(() async {
+      final existingCollection = await _isar!.cartProductCollections
           .where()
           .productIdEqualTo(request.id)
           .findFirst();
@@ -85,14 +105,14 @@ class Db {
       if (existingCollection != null) {
         if (request.isIncrease) {
           existingCollection.quantity = (existingCollection.quantity ?? 1) + 1;
-          await isar!.cartProductCollections.put(existingCollection);
+          await _isar!.cartProductCollections.put(existingCollection);
         } else {
           if (existingCollection.quantity! > 1) {
             existingCollection.quantity =
                 (existingCollection.quantity ?? 1) - 1;
-            await isar!.cartProductCollections.put(existingCollection);
+            await _isar!.cartProductCollections.put(existingCollection);
           } else {
-            await isar!.cartProductCollections.delete(request.id);
+            await _isar!.cartProductCollections.delete(request.id);
           }
         }
       }
@@ -100,45 +120,38 @@ class Db {
   }
 
   Future<int> getCartProductCount() async {
-    List<CartProductCollection> data =
-        await isar!.cartProductCollections.where().findAll();
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    final data = await _isar!.cartProductCollections.where().findAll();
     return data.length;
   }
 
   Future<List<CartEntity>> removeProductFromCart(int id) async {
-    await isar!.writeTxn(() async {
-      await isar!.cartProductCollections.delete(id);
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    await _isar!.writeTxn(() async {
+      await _isar!.cartProductCollections.delete(id);
     });
+
     return getAllCartProducts();
   }
 
   Future<List<CartEntity>> getAllCartProducts() async {
-    List<CartProductCollection> data =
-        await isar!.cartProductCollections.where().findAll();
-    List<CartEntity> products =
-        data.map((e) => CartEntity.fromCollection(e)).toList();
-    return products;
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    final data = await _isar!.cartProductCollections.where().findAll();
+    return data.map(CartEntity.fromCollection).toList();
   }
 
   Future<void> clearCart() async {
-    await isar!.writeTxn(() async {
-      await isar!.cartProductCollections.clear();
+    if (_isar == null) throw Exception("Database is not initialized");
+
+    await _isar!.writeTxn(() async {
+      await _isar!.cartProductCollections.clear();
     });
   }
 
-  void openDb() async {
-    isar = await DBConfig.openDB();
-    clearDB();
-    addProducts(products);
-  }
-
-  void clearDB() {
-    isar!.writeTxn(() async {
-      isar?.productCollections.clear();
-    });
-  }
-
-  void closeDb() {
-    isar?.close();
+  Future<void> closeDb() async {
+    await _isar?.close();
   }
 }

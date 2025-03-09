@@ -21,7 +21,7 @@ export 'package:eat_like_app/domain/usecases/cart/remove_cart_item_use_case.dart
 export 'package:eat_like_app/domain/usecases/cart/request/update_cart_request.dart';
 export 'package:eat_like_app/domain/usecases/cart/update_cart_item_use_case.dart';
 export 'package:eat_like_app/domain/usecases/product/get_products_by_type_use_case.dart';
-export 'package:eat_like_app/presentation/notifiers/cart/cart_notifier.dart';
+export 'package:eat_like_app/presentation/notifiers/cart/cart_item_count.dart';
 export 'package:eat_like_app/presentation/notifiers/product/product_state_notifier.dart';
 export 'package:eat_like_app/presentation/pages/cart/cart_screen.dart';
 export 'package:eat_like_app/presentation/pages/cart/widgets/cart_widgets.dart';
@@ -40,4 +40,13 @@ export 'package:flutter/material.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:go_router/go_router.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:eat_like_app/app.dart';
+export 'package:flutter/services.dart';
+export 'package:eat_like_app/presentation/notifiers/cart/cart_count_notifier.dart';
+export 'package:eat_like_app/presentation/notifiers/cart/cart_item_notifier.dart';
+export 'package:eat_like_app/presentation/widgets/snackbar.dart';
+export 'package:eat_like_app/presentation/pages/cart/widgets/cart_header.dart';
+export 'package:eat_like_app/presentation/pages/cart/widgets/cart_list.dart';
+export 'package:eat_like_app/presentation/pages/cart/widgets/cart_count.dart';
+export 'package:eat_like_app/presentation/pages/cart/widgets/cart_build.dart';
 

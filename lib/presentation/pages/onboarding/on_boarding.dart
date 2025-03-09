@@ -1,5 +1,4 @@
 import 'package:eat_like_app/presentation/presentation.dart';
-import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends ConsumerWidget {
   const OnBoardingScreen({super.key});

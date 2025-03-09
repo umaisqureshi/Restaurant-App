@@ -1,7 +1,7 @@
 import 'package:eat_like_app/data/data.dart';
 
 class CartRepoImpl extends CartRepo {
-  Db db = Db().instance;
+  Db db = Db();
   @override
   Future<void> addProductToCart(CartEntity product) {
     return db.addProductToCart(product);

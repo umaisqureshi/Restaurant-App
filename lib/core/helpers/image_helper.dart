@@ -28,15 +28,3 @@ class ImageHelper {
   }
 }
 
-
-// return CachedNetworkImage(
-//       imageUrl: imageUrl,
-//       fit: fit,
-//       height: height,
-//       width: width,
-//       placeholder: (context, url) => Center(
-//           child: CircularProgressIndicator(
-//         color: Colors.orange,
-//       )),
-//       errorWidget: (context, url, error) => Icon(Icons.error),
-//     );
