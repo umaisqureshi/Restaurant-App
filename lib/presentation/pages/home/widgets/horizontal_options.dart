@@ -15,35 +15,30 @@ class HorizontalOptionsWidget extends ConsumerWidget {
           _buildOptionCard(
             context: context,
             ref: ref,
-            isSelected: true,
             productType: ProductType.top,
             imagePath: "assets/images/top_rated.png",
           ),
           _buildOptionCard(
             context: context,
             ref: ref,
-            isSelected: false,
             productType: ProductType.burger,
             imagePath: "assets/images/burger.jpg",
           ),
           _buildOptionCard(
             context: context,
             ref: ref,
-            isSelected: false,
             productType: ProductType.pizza,
             imagePath: "assets/images/pizza.jpg",
           ),
           _buildOptionCard(
             context: context,
             ref: ref,
-            isSelected: false,
             productType: ProductType.pasta,
             imagePath: "assets/images/pasta.png",
           ),
           _buildOptionCard(
             context: context,
             ref: ref,
-            isSelected: false,
             productType: ProductType.drink,
             imagePath: "assets/images/drink.jpg",
           ),
@@ -55,30 +50,32 @@ class HorizontalOptionsWidget extends ConsumerWidget {
   Widget _buildOptionCard({
     required BuildContext context,
     required WidgetRef ref,
-    required bool isSelected,
     required ProductType productType,
     required String imagePath,
   }) {
     return roundedOptionCardWidget(
       context: context,
       imagePath: imagePath,
-      isSelected: isSelected,
+      type: productType,
+      ref: ref,
       onPress: () {
         ref.read(productNotifierProvider.notifier).fetchProducts(productType);
+        ref
+            .read(selectedMenuProvider.notifier)
+            .updateSelectedProductType(productType);
       },
-      color: isSelected ? Colors.orange : Colors.white,
     );
   }
 }
 
-Widget roundedOptionCardWidget({
-  required BuildContext context,
-  required String imagePath,
-  required bool isSelected,
-  required VoidCallback onPress,
-  Color color = Colors.white,
-}) {
-  final double cardWidth = isSelected
+Widget roundedOptionCardWidget(
+    {required BuildContext context,
+    required String imagePath,
+    required VoidCallback onPress,
+    required ProductType type,
+    required WidgetRef ref}) {
+  final ProductType productType = ref.watch(selectedMenuProvider);
+  final double cardWidth = productType == type
       ? MediaQuery.sizeOf(context).width * 0.22
       : MediaQuery.sizeOf(context).width * 0.2;
 
@@ -93,10 +90,10 @@ Widget roundedOptionCardWidget({
             image: AssetImage(imagePath),
             fit: BoxFit.cover,
           ),
-          color: color,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: isSelected
+              color: productType == type
                   ? Colors.black.withValues(alpha: 0.8)
                   : Colors.black.withValues(alpha: 0.2),
               blurRadius: 2,

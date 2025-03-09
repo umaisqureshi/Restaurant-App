@@ -46,7 +46,7 @@ Widget _buildProductImage(ProductEntity product) {
           top: 0,
           right: 0,
           child: Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.orange,
               borderRadius: const BorderRadius.only(
@@ -74,7 +74,7 @@ Widget _buildProductDetails(ProductEntity product) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextHelper.textFormat12(
+        TextHelper.textFormat16(
           text: product.name,
           color: Colors.black,
           isBold: true,

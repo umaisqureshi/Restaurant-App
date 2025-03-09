@@ -14,3 +14,15 @@ class ProductNotifier extends StateNotifier<ProductState> {
     }
   }
 }
+
+class SelectedProductNotifier extends StateNotifier<ProductType> {
+  SelectedProductNotifier() : super(ProductType.top);
+
+  Future<void> updateSelectedProductType(ProductType type) async {
+    try {
+      state = type;
+    } catch (e) {
+      state = ProductType.top;
+    }
+  }
+}

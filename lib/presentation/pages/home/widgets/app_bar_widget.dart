@@ -52,15 +52,6 @@ Widget _buildAppTitle() {
 Widget _buildNotificationIcon() {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    child: circularOption(
-      backgroundColor: Colors.white,
-      icon: const Icon(
-        Icons.notifications,
-        color: Colors.orange,
-        size: 20,
-      ),
-      onPress: () {},
-    ),
   );
 }
 

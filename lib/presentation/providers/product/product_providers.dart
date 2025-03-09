@@ -15,3 +15,8 @@ final productNotifierProvider =
   final getProductsByTypeUseCase = ref.watch(getProductsByTypeUseCaseProvider);
   return ProductNotifier(getProductsByTypeUseCase);
 });
+
+final selectedMenuProvider =
+    StateNotifierProvider<SelectedProductNotifier, ProductType>((ref) {
+  return SelectedProductNotifier();
+});
