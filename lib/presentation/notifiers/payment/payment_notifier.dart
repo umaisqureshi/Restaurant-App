@@ -5,7 +5,6 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
   PaymentNotifier({required PaymentRemoteService paymentRemoteService})
       : _paymentRemoteService = paymentRemoteService,
         super(PaymentLoading());
-
   makePayment(int amount, String currency) async {
     try {
       await _paymentRemoteService.makePayment(amount, currency);
