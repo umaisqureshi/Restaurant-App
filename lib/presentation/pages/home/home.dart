@@ -11,6 +11,10 @@ class HomeScreen extends ConsumerWidget {
         Future.delayed(const Duration(milliseconds: 100), () {
           ref.read(cartCountNotifier.notifier).getCartCount();
         });
+        SnackbarWidget().showSnackBar("Payment done successfully!", context);
+      } else if (next is PaymentError) {
+        SnackbarWidget()
+            .showSnackBar("Payment failed! Please try again", context);
       }
     });
 
