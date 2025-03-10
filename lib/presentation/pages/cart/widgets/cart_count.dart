@@ -30,7 +30,6 @@ Widget cartItemCountWidget(WidgetRef ref, int count, int id) {
     ),
   );
 }
-
 Widget _buildCountButton(
     {required IconData icon, required VoidCallback onPressed}) {
   return GestureDetector(
