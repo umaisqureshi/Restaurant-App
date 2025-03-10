@@ -1,7 +1,12 @@
+import 'package:eat_like_app/data/service/payment_service.dart';
 import 'package:eat_like_app/presentation/presentation.dart';
 
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   return ProductRepoImpl();
+});
+
+final paymentRemoteServiceProvider = Provider<PaymentRemoteService>((ref) {
+  return PaymentRemoteService();
 });
 
 final getProductsByTypeUseCaseProvider =
