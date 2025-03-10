@@ -16,7 +16,6 @@ class PaymentRemoteService {
           merchantDisplayName: 'Umais',
         ),
       );
-      displayPaymentSheet();
     } catch (e) {
       debugPrint("exception $e");
       if (e is StripeConfigException) {
@@ -27,16 +26,19 @@ class PaymentRemoteService {
     }
   }
 
-  displayPaymentSheet() async {
+  Future<bool> displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet();
-      debugPrint('Paid successfully');
       paymentIntent = null;
+      debugPrint('Paid successfully');
+      return true;
     } on StripeException catch (e) {
       debugPrint('Error: $e');
+      return false;
     } catch (e) {
       debugPrint("Error in displaying");
       debugPrint('$e');
+      return false;
     }
   }
 

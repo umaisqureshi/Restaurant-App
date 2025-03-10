@@ -5,6 +5,15 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<PaymentState>(paymentNotifierProvider, (previous, next) {
+      if (next is PaymentSuccess) {
+        ref.read(cartNotifierProvider.notifier).clearCart();
+        Future.delayed(const Duration(milliseconds: 100), () {
+          ref.read(cartCountNotifier.notifier).getCartCount();
+        });
+      }
+    });
+
     return Container(
       color: Colors.white,
       child: SafeArea(

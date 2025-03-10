@@ -13,4 +13,5 @@ class CartCountNotifier extends StateNotifier<int> {
       state = 0;
     }
   }
+
 }

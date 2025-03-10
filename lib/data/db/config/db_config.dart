@@ -1,5 +1,4 @@
 import 'package:eat_like_app/data/data.dart';
-import 'package:eat_like_app/data/db/collections/cart_collection.dart';
 
 class DBConfig {
   static Future<Isar> openDB() async {

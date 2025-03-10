@@ -70,14 +70,15 @@ Widget _buildPaymentRow(String label, String value, {bool isBold = false}) {
 
 Widget _buildOrderConfirmedButton(
     int cartCount, double total, WidgetRef ref, BuildContext context) {
-  final pay = ref.read(paymentRemoteServiceProvider);
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: GestureDetector(
         onTap: () {
-          pay.makePayment(total.toInt(), "eur");
+          ref
+              .read(paymentNotifierProvider.notifier)
+              .makePayment(total.toInt(), "eur");
           context.pop();
         },
         child: Container(

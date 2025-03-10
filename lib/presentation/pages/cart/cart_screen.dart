@@ -5,7 +5,6 @@ class CartScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cartState = ref.watch(cartNotifierProvider);
 
     return Scaffold(
       body: Container(
@@ -26,7 +25,7 @@ class CartScreen extends ConsumerWidget {
           children: [
             cartHeaderWidget(context),
             const SizedBox(height: 10),
-            Expanded(child: buildCart(cartState, context, ref)),
+            Expanded(child: buildCart( context, ref)),
           ],
         ),
       ),
