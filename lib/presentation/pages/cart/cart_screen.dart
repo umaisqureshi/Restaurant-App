@@ -5,11 +5,10 @@ class CartScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity, 
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -25,14 +24,10 @@ class CartScreen extends ConsumerWidget {
           children: [
             cartHeaderWidget(context),
             const SizedBox(height: 10),
-            Expanded(child: buildCart( context, ref)),
+            Expanded(child: buildCart(context, ref)),
           ],
         ),
       ),
     );
   }
-
-
-
- 
 }

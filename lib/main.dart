@@ -1,6 +1,5 @@
-import 'package:eat_like_app/core/constant/keys.dart';
-import 'package:eat_like_app/presentation/presentation.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:eat_like_app/presentation/presentation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
