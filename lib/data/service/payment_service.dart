@@ -49,11 +49,11 @@ class PaymentRemoteService {
         'currency': currency,
         'payment_method_types[]': 'card',
       };
-   //   var secretKey = AppKeys.secretKey;
+      var secretKey = AppKeys.secretKey;
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-    //      'Authorization': 'Bearer $secretKey',
+          'Authorization': 'Bearer $secretKey',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,
