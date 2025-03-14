@@ -10,6 +10,11 @@ final getProductsByTypeUseCaseProvider =
   return GetProductsByTypeUseCase(productRepository);
 });
 
+final getAllProductsProvider = Provider<GetAllProductsUseCase>((ref) {
+  final productRepository = ref.watch(productRepositoryProvider);
+  return GetAllProductsUseCase(productRepository: productRepository);
+});
+
 final productNotifierProvider =
     StateNotifierProvider<ProductNotifier, ProductState>((ref) {
   final getProductsByTypeUseCase = ref.watch(getProductsByTypeUseCaseProvider);

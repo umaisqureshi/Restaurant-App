@@ -1,6 +1,5 @@
 import 'package:eat_like_app/core/core.dart';
 
-
 List<ProductEntity> products = [
   ProductEntity(
     name: 'Cheese Burger',

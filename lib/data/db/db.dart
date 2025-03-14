@@ -10,7 +10,6 @@ class Db {
   Future<void> init() async {
     await _openDb();
     await _clearDb();
-    await _addInitialProducts();
   }
 
   Future<void> _openDb() async {
@@ -22,10 +21,6 @@ class Db {
       await _isar?.productCollections.clear();
       await _isar?.cartProductCollections.clear();
     });
-  }
-
-  Future<void> _addInitialProducts() async {
-    await addProducts(products);
   }
 
   Future<void> addProducts(List<ProductEntity> products) async {

@@ -4,4 +4,5 @@ abstract class ProductRepository {
   Future addProducts(List<ProductEntity> products);
   Future<List<ProductEntity>> getProductsByType(ProductType type);
   Future<List<ProductEntity>> getTopProducts();
+  Future<List<ProductEntity>> getAllProducts();
 }

@@ -18,6 +18,12 @@ class HomeScreen extends ConsumerWidget {
       }
     });
 
+    ref.listen<ProductState>(productNotifierProvider, (previous, next) {
+      if (next is ProductLoaded) {
+        ref.read(productNotifierProvider.notifier).fetchProducts(ProductType.top);
+      }
+    });
+
     return Container(
       color: Colors.white,
       child: SafeArea(

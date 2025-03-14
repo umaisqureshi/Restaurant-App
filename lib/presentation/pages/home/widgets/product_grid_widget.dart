@@ -29,8 +29,8 @@ class ProductGridWidget extends ConsumerWidget {
     }
   }
 
-  void _initializeProducts(WidgetRef ref) {
-    ref.read(productNotifierProvider.notifier).fetchProducts(ProductType.top);
+  void _initializeProducts(WidgetRef ref) async {
+    await ref.read(getAllProductsProvider).execute();
     Future.delayed(const Duration(milliseconds: 100), () {
       ref.read(cartCountNotifier.notifier).getCartCount();
     });

@@ -54,3 +54,4 @@ export 'package:eat_like_app/data/service/payment_service.dart';
 export 'package:eat_like_app/presentation/notifiers/payment/payment_notifier.dart';
 export 'package:eat_like_app/presentation/state/payment/payment_state.dart';
 export 'package:eat_like_app/presentation/providers/payment/payment_providers.dart';
+export 'package:eat_like_app/domain/usecases/product/get_all_products_use_case.dart';
