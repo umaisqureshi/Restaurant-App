@@ -32,7 +32,7 @@ class ProductGridWidget extends ConsumerWidget {
   void _initializeProducts(WidgetRef ref) async {
     await ref.read(getAllProductsProvider).execute();
     Future.delayed(const Duration(milliseconds: 100), () {
-      ref.read(cartCountNotifier.notifier).getCartCount();
+      ref.read(productNotifierProvider.notifier).fetchProducts(ProductType.top);
     });
   }
 
@@ -46,7 +46,6 @@ class ProductGridWidget extends ConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.8,
       ),
       itemCount: products.length,
       itemBuilder: (context, index) {

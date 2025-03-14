@@ -25,6 +25,7 @@ Widget productCardWidget({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildProductImage(product),
+          const SizedBox(height: 8),
           _buildProductDetails(product),
         ],
       ),
@@ -38,7 +39,7 @@ Widget _buildProductImage(ProductEntity product) {
       children: [
         ImageHelper.imageFromGallery(
           path: product.imageUrl,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           height: 150,
           width: double.infinity,
         ),
@@ -70,7 +71,11 @@ Widget _buildProductImage(ProductEntity product) {
 
 Widget _buildProductDetails(ProductEntity product) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+    padding: const EdgeInsets.only(
+      left: 8.0,
+      right: 8.0,
+      bottom: 16.0,
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -88,7 +93,6 @@ Widget _buildProductDetails(ProductEntity product) {
             fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 2),
       ],
     ),
   );
