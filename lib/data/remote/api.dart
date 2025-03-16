@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:eat_like_app/data/data.dart';
 
 class ApiService {
-  static const String baseUrl = "http://localhost:8000";
+  static const String baseUrl = "http://localhost:8000/api";
 
   static Future<List<ProductEntity>> getAllProducts() async {
     final response = await http.get(Uri.parse("$baseUrl/products"));
