@@ -8,3 +8,6 @@ export 'package:eat_like_app/domain/repositories/cart_repo.dart';
 export 'package:eat_like_app/domain/entities/cart_entity.dart';
 export 'package:dartz/dartz.dart';
 export 'package:eat_like_app/domain/usecases/cart/request/update_cart_request.dart';
+export 'package:eat_like_app/domain/repositories/favorite_repo.dart';
+export 'package:eat_like_app/domain/usecases/favorite/get_favorites_use_case.dart';
+export 'package:eat_like_app/domain/usecases/favorite/mark_as_favorite_use_case.dart';

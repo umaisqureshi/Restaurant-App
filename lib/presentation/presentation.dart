@@ -55,3 +55,9 @@ export 'package:eat_like_app/presentation/notifiers/payment/payment_notifier.dar
 export 'package:eat_like_app/presentation/state/payment/payment_state.dart';
 export 'package:eat_like_app/presentation/providers/payment/payment_providers.dart';
 export 'package:eat_like_app/domain/usecases/product/get_all_products_use_case.dart';
+export 'package:eat_like_app/data/repositories/favorite_repo_impl.dart';
+export 'package:eat_like_app/domain/repositories/favorite_repo.dart';
+export 'package:eat_like_app/domain/usecases/favorite/get_favorites_use_case.dart';
+export 'package:eat_like_app/domain/usecases/favorite/mark_as_favorite_use_case.dart';
+export 'package:eat_like_app/presentation/notifiers/favorite/get_favorite_notifer.dart';
+export 'package:eat_like_app/presentation/notifiers/favorite/mark_favorite_notifier.dart';

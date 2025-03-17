@@ -17,5 +17,5 @@ export 'package:flutter/foundation.dart';
 export 'package:isar/isar.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:flutter_stripe/flutter_stripe.dart';
-
-
+export 'package:eat_like_app/domain/repositories/favorite_repo.dart';
+export 'package:eat_like_app/data/remote/api.dart';
