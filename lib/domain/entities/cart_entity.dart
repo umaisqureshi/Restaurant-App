@@ -1,7 +1,7 @@
 import 'package:eat_like_app/data/db/collections/cart_collection.dart';
 
 class CartEntity {
-  final int id;
+  final String id;
   final String name;
   final double price;
   final int quantity;
@@ -18,7 +18,7 @@ class CartEntity {
   double get total => price * quantity;
 
   CartEntity copyWith({
-    int? id,
+    String? id,
     String? name,
     double? price,
     int? quantity,
@@ -35,7 +35,7 @@ class CartEntity {
 
   static CartEntity fromCollection(CartProductCollection e) {
     return CartEntity(
-      id: e.id,
+      id: e.productId ?? "",
       imageUrl: e.imageUrl!,
       name: e.name!,
       price: e.price!,

@@ -5,6 +5,7 @@ part 'cart_collection.g.dart';
 @collection
 class CartProductCollection {
   Id id = Isar.autoIncrement;
+
   @Index(type: IndexType.value)
   String? name;
 
@@ -15,7 +16,7 @@ class CartProductCollection {
   double? price;
 
   @Index(type: IndexType.value)
-  int? productId;
+  String? productId;
 
   @Index(type: IndexType.value)
   int? quantity;

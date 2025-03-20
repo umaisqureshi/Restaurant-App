@@ -50,7 +50,7 @@ class CartItemNotifier extends StateNotifier<CartState> {
     }
   }
 
-  Future<void> removeProductFromCart(int id) async {
+  Future<void> removeProductFromCart(String id) async {
     try {
       await _removeCartItemUseCase.execute(id);
       await getAllCartProducts();

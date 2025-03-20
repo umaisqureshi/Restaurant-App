@@ -36,7 +36,7 @@ const CartProductCollectionSchema = CollectionSchema(
     r'productId': PropertySchema(
       id: 3,
       name: r'productId',
-      type: IsarType.long,
+      type: IsarType.string,
     ),
     r'quantity': PropertySchema(
       id: 4,
@@ -98,7 +98,7 @@ const CartProductCollectionSchema = CollectionSchema(
         IndexPropertySchema(
           name: r'productId',
           type: IndexType.value,
-          caseSensitive: false,
+          caseSensitive: true,
         )
       ],
     ),
@@ -142,6 +142,12 @@ int _cartProductCollectionEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.productId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -154,7 +160,7 @@ void _cartProductCollectionSerialize(
   writer.writeString(offsets[0], object.imageUrl);
   writer.writeString(offsets[1], object.name);
   writer.writeDouble(offsets[2], object.price);
-  writer.writeLong(offsets[3], object.productId);
+  writer.writeString(offsets[3], object.productId);
   writer.writeLong(offsets[4], object.quantity);
 }
 
@@ -169,7 +175,7 @@ CartProductCollection _cartProductCollectionDeserialize(
   object.imageUrl = reader.readStringOrNull(offsets[0]);
   object.name = reader.readStringOrNull(offsets[1]);
   object.price = reader.readDoubleOrNull(offsets[2]);
-  object.productId = reader.readLongOrNull(offsets[3]);
+  object.productId = reader.readStringOrNull(offsets[3]);
   object.quantity = reader.readLongOrNull(offsets[4]);
   return object;
 }
@@ -188,7 +194,7 @@ P _cartProductCollectionDeserializeProp<P>(
     case 2:
       return (reader.readDoubleOrNull(offset)) as P;
     case 3:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     default:
@@ -799,7 +805,7 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
-      productIdEqualTo(int? productId) {
+      productIdEqualTo(String? productId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'productId',
@@ -809,7 +815,7 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
-      productIdNotEqualTo(int? productId) {
+      productIdNotEqualTo(String? productId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -845,7 +851,7 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
 
   QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
       productIdGreaterThan(
-    int? productId, {
+    String? productId, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -860,7 +866,7 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
 
   QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
       productIdLessThan(
-    int? productId, {
+    String? productId, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -875,8 +881,8 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
 
   QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
       productIdBetween(
-    int? lowerProductId,
-    int? upperProductId, {
+    String? lowerProductId,
+    String? upperProductId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -888,6 +894,54 @@ extension CartProductCollectionQueryWhere on QueryBuilder<CartProductCollection,
         upper: [upperProductId],
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
+      productIdStartsWith(String ProductIdPrefix) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'productId',
+        lower: [ProductIdPrefix],
+        upper: ['$ProductIdPrefix\u{FFFFF}'],
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
+      productIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'productId',
+        value: [''],
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection, QAfterWhereClause>
+      productIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'productId',
+              upper: [''],
+            ))
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'productId',
+              lower: [''],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'productId',
+              lower: [''],
+            ))
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'productId',
+              upper: [''],
+            ));
+      }
     });
   }
 
@@ -1480,49 +1534,58 @@ extension CartProductCollectionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection,
-      QAfterFilterCondition> productIdEqualTo(int? value) {
+      QAfterFilterCondition> productIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'productId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection,
       QAfterFilterCondition> productIdGreaterThan(
-    int? value, {
+    String? value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'productId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection,
       QAfterFilterCondition> productIdLessThan(
-    int? value, {
+    String? value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'productId',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection,
       QAfterFilterCondition> productIdBetween(
-    int? lower,
-    int? upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1531,6 +1594,79 @@ extension CartProductCollectionQueryFilter on QueryBuilder<
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+      QAfterFilterCondition> productIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'productId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+      QAfterFilterCondition> productIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'productId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+          QAfterFilterCondition>
+      productIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'productId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+          QAfterFilterCondition>
+      productIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'productId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+      QAfterFilterCondition> productIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'productId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CartProductCollection, CartProductCollection,
+      QAfterFilterCondition> productIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'productId',
+        value: '',
       ));
     });
   }
@@ -1800,9 +1936,9 @@ extension CartProductCollectionQueryWhereDistinct
   }
 
   QueryBuilder<CartProductCollection, CartProductCollection, QDistinct>
-      distinctByProductId() {
+      distinctByProductId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'productId');
+      return query.addDistinctBy(r'productId', caseSensitive: caseSensitive);
     });
   }
 
@@ -1843,7 +1979,7 @@ extension CartProductCollectionQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<CartProductCollection, int?, QQueryOperations>
+  QueryBuilder<CartProductCollection, String?, QQueryOperations>
       productIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'productId');

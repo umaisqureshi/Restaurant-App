@@ -1,6 +1,6 @@
 class UpdateCartRequest {
   final bool isIncrease;
-  final int id;
+  final String id;
 
   const UpdateCartRequest({required this.id, required this.isIncrease});
 }

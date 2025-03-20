@@ -30,6 +30,7 @@ class Db {
       for (final product in products) {
         final collection = ProductCollection()
           ..name = product.name
+          ..productId = product.productId
           ..description = product.description
           ..price = product.price
           ..isTopRated = product.isTopRated
@@ -64,7 +65,6 @@ class Db {
 
   Future<void> addProductToCart(CartEntity product) async {
     if (_isar == null) throw Exception("Database is not initialized");
-
     await _isar!.writeTxn(() async {
       final existingCollection = await _isar!.cartProductCollections
           .where()
@@ -107,7 +107,10 @@ class Db {
                 (existingCollection.quantity ?? 1) - 1;
             await _isar!.cartProductCollections.put(existingCollection);
           } else {
-            await _isar!.cartProductCollections.delete(request.id);
+            await _isar!.cartProductCollections
+                .where()
+                .productIdEqualTo(request.id)
+                .deleteAll();
           }
         }
       }
@@ -121,11 +124,14 @@ class Db {
     return data.length;
   }
 
-  Future<List<CartEntity>> removeProductFromCart(int id) async {
+  Future<List<CartEntity>> removeProductFromCart(String id) async {
     if (_isar == null) throw Exception("Database is not initialized");
 
     await _isar!.writeTxn(() async {
-      await _isar!.cartProductCollections.delete(id);
+      await _isar!.cartProductCollections
+          .where()
+          .productIdEqualTo(id)
+          .deleteAll();
     });
 
     return getAllCartProducts();

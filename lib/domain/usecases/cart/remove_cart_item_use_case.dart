@@ -5,7 +5,7 @@ class RemoveCartItemUseCase {
 
   RemoveCartItemUseCase(this._cartRepository);
 
-  Future<List<CartEntity>> execute(int productId) async {
+  Future<List<CartEntity>> execute(String productId) async {
     return await _cartRepository.removeProductFromCart(productId);
   }
 }

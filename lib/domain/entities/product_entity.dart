@@ -1,7 +1,7 @@
 import 'package:eat_like_app/domain/domain.dart';
 
 class ProductEntity {
-  final int? id;
+  final String productId;
   final String name;
   final String description;
   final double price;
@@ -11,7 +11,7 @@ class ProductEntity {
   final bool isTopRated;
 
   ProductEntity({
-    this.id,
+    required this.productId,
     required this.name,
     required this.description,
     required this.price,
@@ -23,7 +23,7 @@ class ProductEntity {
 
   factory ProductEntity.fromJson(Map<String, dynamic> json) {
     return ProductEntity(
-      id: json['id'] as int?,
+      productId: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
       price: (json['price'] as num).toDouble(),
@@ -39,7 +39,7 @@ class ProductEntity {
 
   static ProductEntity fromCollection(ProductCollection e) {
     return ProductEntity(
-      id: e.id,
+      productId: e.productId ?? "",
       name: e.name ?? "",
       description: e.description ?? "",
       price: e.price ?? 0.0,

@@ -2,7 +2,6 @@ library;
 
 export 'dart:convert';
 export 'package:eat_like_app/core/constant/keys.dart';
-export 'package:eat_like_app/core/constant/products.dart';
 export 'package:eat_like_app/core/enum/enums.dart';
 export 'package:eat_like_app/data/db/collections/cart_collection.dart';
 export 'package:eat_like_app/data/db/collections/product_collection.dart';

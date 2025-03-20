@@ -18,7 +18,7 @@ class CartRepoImpl extends CartRepo {
   }
 
   @override
-  Future<List<CartEntity>> removeProductFromCart(int id) {
+  Future<List<CartEntity>> removeProductFromCart(String id) {
     return db.removeProductFromCart(id);
   }
 

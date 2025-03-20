@@ -1,6 +1,6 @@
 import 'package:eat_like_app/presentation/presentation.dart';
 
-Widget cartItemCountWidget(WidgetRef ref, int count, int id) {
+Widget cartItemCountWidget(WidgetRef ref, int count, String id) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16.0),
     child: Row(
@@ -30,6 +30,7 @@ Widget cartItemCountWidget(WidgetRef ref, int count, int id) {
     ),
   );
 }
+
 Widget _buildCountButton(
     {required IconData icon, required VoidCallback onPressed}) {
   return GestureDetector(
@@ -69,7 +70,7 @@ Widget _buildCountDisplay(int count) {
   );
 }
 
-void _updateCartItem(WidgetRef ref, int id, bool isIncrease) {
+void _updateCartItem(WidgetRef ref, String id, bool isIncrease) {
   final request = UpdateCartRequest(id: id, isIncrease: isIncrease);
   ref.read(cartNotifierProvider.notifier).updateCartItem(request);
 

@@ -36,7 +36,6 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
     );
   }
 
-
   Widget _buildProductImageSection() {
     return Stack(
       children: [
@@ -166,7 +165,7 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
 
     cartNotifier.addProductToCart(
       CartEntity(
-        id: widget.product.id!,
+        id: widget.product.productId,
         name: widget.product.name,
         imageUrl: widget.product.imageUrl,
         price: widget.product.price,
@@ -177,7 +176,8 @@ class _ProductDetailWidgetState extends ConsumerState<ProductDetailWidget> {
     Future.delayed(const Duration(milliseconds: 100), () {
       ref.read(cartCountNotifier.notifier).getCartCount();
     });
-  }}
+  }
+}
 
 Widget _buildItemCountWidget(WidgetRef ref) {
   final cartCount = ref.watch(itemCountNotifier);
@@ -202,7 +202,8 @@ Widget _buildItemCountWidget(WidgetRef ref) {
             children: [
               _buildCountButton(
                 icon: Icons.remove,
-                onPressed: () => ref.read(itemCountNotifier.notifier).decrement(),
+                onPressed: () =>
+                    ref.read(itemCountNotifier.notifier).decrement(),
               ),
               Container(
                 height: 30,
@@ -224,7 +225,8 @@ Widget _buildItemCountWidget(WidgetRef ref) {
               ),
               _buildCountButton(
                 icon: Icons.add,
-                onPressed: () => ref.read(itemCountNotifier.notifier).increment(),
+                onPressed: () =>
+                    ref.read(itemCountNotifier.notifier).increment(),
               ),
             ],
           ),
@@ -234,7 +236,8 @@ Widget _buildItemCountWidget(WidgetRef ref) {
   );
 }
 
-Widget _buildCountButton({required IconData icon, required VoidCallback onPressed}) {
+Widget _buildCountButton(
+    {required IconData icon, required VoidCallback onPressed}) {
   return GestureDetector(
     onTap: onPressed,
     child: Container(

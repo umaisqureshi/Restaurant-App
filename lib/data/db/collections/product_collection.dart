@@ -7,6 +7,9 @@ class ProductCollection {
   Id id = Isar.autoIncrement;
 
   @Index(type: IndexType.value)
+  String? productId;
+
+  @Index(type: IndexType.value)
   String? name;
 
   @Index(type: IndexType.value)
