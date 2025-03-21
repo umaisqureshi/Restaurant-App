@@ -6,7 +6,6 @@ class ProductGridWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productState = ref.watch(productNotifierProvider);
-
     return _buildProductGridContent(productState, ref, context);
   }
 
